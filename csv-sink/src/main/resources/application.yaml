@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    stream:
+      function:
+        bindings:
+          saveFile-in-0: input
+      bindings:
+        input:
+          destination: filedump
+  datasource:
+    url: jdbc:mysql://localhost:3306/data_ingestion
+    username: root
+    password: n7B37b**#un83
