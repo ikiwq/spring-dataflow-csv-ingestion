@@ -6,7 +6,7 @@ The project is divided between the processor and the sink.
 ### Overall structure
 <img src="https://github.com/ikiwq/spring-dataflow-csv-ingestion/assets/110495658/50c80bb7-1f0f-4648-81f7-2e20079f811b" width="900"/>
 
-### The processor
+## The processor
 <img src="https://github.com/ikiwq/spring-dataflow-csv-ingestion/assets/110495658/31975dc2-fd4c-4cc8-a1dd-9fb0d6be1a06" width="700"/>
 
 #### Fetching the properties
@@ -29,7 +29,7 @@ Once the processor finds a matching regex, the properties are then taken and use
 #### Fragmenting the file
 The file is then fragmented based on the batch size present in the application.yaml file. A DTO containing the file reference, separator, headers and desired dump path are then published into the messaging queue, ready to be read from the sink.
 
-### The sink
+## The sink
 <img src="https://github.com/ikiwq/spring-dataflow-csv-ingestion/assets/110495658/bb135b1b-8a89-4be7-b5a8-46d2002e8e18" width="700"/>
 
 The sink takes the information from the messaging queue. To ensure that data is not lost, if the chosen table is not present, the sink creates a temporary table filling the fields with VARCHAR fields and only then the data loap scripts are written and executed.
