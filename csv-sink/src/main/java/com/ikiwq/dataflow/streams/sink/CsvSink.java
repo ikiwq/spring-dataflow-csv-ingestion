@@ -26,10 +26,16 @@ public class CsvSink {
             log.debug("Executing statement {}", createStatement);
             jdbcTemplate.execute(createStatement);
 
-            String loadStatement = generateLoadDataStatement(csvFile.getFile(), csvFile.getRelativePath(), csvFile.getTable(), csvFile.getSeparator());
+            String uploadFolderPath = getMySqlUploadFolder();
+            String loadStatement = generateLoadDataStatement(csvFile.getFile(), uploadFolderPath, csvFile.getTable(), csvFile.getSeparator());
             log.debug("Executing statement {}", loadStatement);
             jdbcTemplate.execute(loadStatement);
         };
+    }
+
+    private String getMySqlUploadFolder(){
+        String sql = "SELECT @@global.secure_file_priv";
+        return jdbcTemplate.queryForObject(sql, String.class);
     }
 
     private String generateCreateStatement(List<String> headers, String tableName){
@@ -43,10 +49,12 @@ public class CsvSink {
         return sql.toString();
     }
 
-    private String generateLoadDataStatement(File file, String relativeDumpDirectory, String tableName, Character separator){
-        StringBuilder sql = new StringBuilder("LOAD DATA INFILE '").append(relativeDumpDirectory).append(file.getName()).append("' ");
+    private String generateLoadDataStatement(File file, String uploadPath, String tableName, Character separator){
+        String fixedUploadPath = uploadPath.replace('\\', '/');
+
+        StringBuilder sql = new StringBuilder("LOAD DATA INFILE '").append(fixedUploadPath).append(file.getName()).append("' ");
         sql.append("IGNORE ");
-        sql.append("INTO TABLE ").append(tableName).append(" ");
+        sql.append("INTO TABLE `").append(tableName).append("` ");
         sql.append("FIELDS TERMINATED BY '").append(separator).append("' ");
         sql.append("OPTIONALLY ENCLOSED BY '\"' ");
         sql.append("LINES TERMINATED BY '\\n';");

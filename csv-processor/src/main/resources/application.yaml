@@ -1,7 +1,6 @@
 processor:
   batch-size: 50000
-  absolute-dump-directory: C:\ProgramData\MySQL\MySQL Server 8.0\Data\csv_ingestion\
-  relative-dump-directory: csv_ingestion/
+  absolute-dump-directory: C:\ProgramData\MySQL\MySQL Server 8.3\Uploads\
 
 spring:
   cloud:
@@ -16,6 +15,6 @@ spring:
         output:
           destination: filedump
   datasource:
-    url: jdbc:mysql://localhost:3306/data_ingestion
+    url: jdbc:mysql://localhost:3306/csv_ingestion
     username: root
-    password: n7B37b**#un83
+    password: 1234

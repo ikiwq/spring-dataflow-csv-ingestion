@@ -12,11 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 public class CsvFile {
     private File file;
-    // The relative path refers to the MySQL folder.
-    // When loading a file in MySQL, by default it only accepts file inside its server directory.
-    // So, for example an absolute filepath like C:/User/MySQL/Server/Dumps/Dump.csv would be equal to Dumps/Dump.csv
-    private String relativePath;
-
     private List<String> headers;
     private String table;
     private Character separator;

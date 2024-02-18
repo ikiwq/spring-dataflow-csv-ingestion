@@ -29,9 +29,6 @@ public class CsvProcessor {
     @Value("${processor.absolute-dump-directory}")
     private String absoluteDumpDirectory;
 
-    @Value("${processor.relative-dump-directory}")
-    private String relativeDumpDirectory;
-
     private final CsvPropertiesRepository csvPropertiesRepository;
 
     @Bean
@@ -48,7 +45,7 @@ public class CsvProcessor {
 
             try {
                 return organizeFileIntoBatches(reader, file.getName()).parallelStream().map(batch -> {
-                    CsvFile csvFile = new CsvFile(batch, relativeDumpDirectory, newHeaders, properties.getTableName(), properties.getSeparator());
+                    CsvFile csvFile = new CsvFile(batch, newHeaders, properties.getTableName(), properties.getSeparator());
                     return MessageBuilder.withPayload(csvFile).build();
                 }).toList();
             } catch (IOException e) {

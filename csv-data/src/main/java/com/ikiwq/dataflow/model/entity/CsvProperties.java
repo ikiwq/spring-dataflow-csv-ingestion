@@ -1,5 +1,6 @@
 package com.ikiwq.dataflow.model.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CsvProperties {
     @Id
+    @Column(name = "file_name")
     private String fileName;
+    @Column(name = "table_name")
     private String tableName;
+    @Column(name = "separator")
     private char separator;
 }
